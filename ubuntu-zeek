@@ -1,32 +1,65 @@
 #!/bin/bash
 
-sudo apt install net-tools -y
+# Function to display messages and get user input
+get_input() {
+    echo "SNB-Chat-bot: $1"
+    read -r user_input
+}
 
-if ! command -v zeek &> /dev/null; then
-    echo "Zeek is not installed. Installing..."
+# Welcome message
+echo "SNB-Chat-bot: Hi, what's your name?"
+read -r name
+
+# Greet the user by name
+echo "SNB-Chat-bot: Hi $name!"
+
+# Ask if the user wants to continue
+get_input "Do you want to continue? (yes/no)"
+
+# Check the user's response
+if [[ "$user_input" =~ ^[Yy] ]]; then
+    echo "SNB-Chat-bot: Great! You need to install zeek. Do you want to proceed? (yes/no)"
+
+    # Check the user's response
+    get_input "Do you want to install zeek? (yes/no)"
     
-    if grep -q 'Ubuntu 22.04' /etc/os-release; then
-        echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
-    elif grep -q 'Ubuntu 20.04' /etc/os-release; then
-        echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
-    else
-        echo "Unsupported Ubuntu version"
-        exit 1
-    fi
+    # Check the user's response
+    if [[ "$user_input" =~ ^[Yy] ]]; then
+        # Execute the installation script
+        echo "SNB-Chat-bot: Installing zeek..."
 
-    curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_$(lsb_release -rs)/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
-    sudo apt update
-    sudo apt install zeek -y
-
-    echo "export PATH=$PATH:/opt/zeek/bin" >> ~/.bashrc
-    source ~/.bashrc
-fi
+##############################################################################################################
+echo  --------------"It will be start 30 Sec"------------
+sleep 30
+sudo apt update -y
+sudo apt upgrade -y
 
 echo "Enter server IP address:"
 read server_ip
 
 echo "Enter interface name:"
 read interface
+
+if grep -q 'Ubuntu 22.04' /etc/os-release; then
+    echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
+    curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
+    sudo apt update
+    sudo apt install zeek -y
+elif grep -q 'Ubuntu 20.04' /etc/os-release; then
+    echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
+    curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
+    sudo apt update
+    sudo apt install zeek -y
+fi
+
+echo "export PATH=$PATH:/opt/zeek/bin" >> ~/.bashrc
+source ~/.bashrc
+echo "Enter source .bashrc command:"
+read cammand
+sudo $cammand
+
+zeek --version  
+sleep 10
 
 cat << EOF | sudo tee /opt/zeek/etc/networks.cfg
 10.0.0.0/8          Private IP space
@@ -60,10 +93,17 @@ EOF
 
 zeekctl check
 zeekctl deploy
-zeekctl start
-sleep 10
-
 zeekctl status
 ls -l /opt/zeek/logs/current/
 sleep 10
 tail /opt/zeek/logs/current/conn.log
+sleep 10
+
+##############################################################################################################################################################################################################
+        echo "SNB-Chat-bot: zeek installation completed!"
+    else
+        echo "SNB-Chat-bot: Okay, stopping the process. If you change your mind, feel free to restart the chatbot Mr/Mis $name!."
+    fi
+else
+    echo "SNB-Chat-bot: Okay, stopping the process. If you change your mind, feel free to restart the chatbot Mr/Mis $name!."
+fi
