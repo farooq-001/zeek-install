@@ -1,5 +1,6 @@
 #!/bin/bash
-
+# https://software.opensuse.org/download.html?project=security%3Azeek&package=zeek
+# https://www.howtoforge.com/how-to-install-zeek-network-security-monitoring-tool-on-ubuntu-22-04/
 # Function to display messages and get user input
 get_input() {
     echo "SNB-Chat-bot: $1"
