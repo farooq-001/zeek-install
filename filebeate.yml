@@ -1,0 +1,179 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/conn.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "conn"
+    description: "Connection logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/dns.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "dns"
+    description: "DNS logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/http.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "http"
+    description: "HTTP logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/files.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "files"
+    description: "Files logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/ftp.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "ftp"
+    description: "FTP logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/ssl.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "ssl"
+    description: "SSL logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/x509.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "x509"
+    description: "X509 logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/smtp.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "smtp"
+    description: "SMTP logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/ssh.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "ssh"
+    description: "SSH logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/pe.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "pe"
+    description: "PE logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/dhcp.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "dhcp"
+    description: "DHCP logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/ntp.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "ntp"
+    description: "NTP logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/smb.log"
+    - "/opt/zeek/logs/current/dce_rpc.log"
+    - "/opt/zeek/logs/current/kerberos.log"
+    - "/opt/zeek/logs/current/ntlm.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "smb"
+    description: "SMB logs (DCE-RPC, Kerberos, NTLM)"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/irc.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "irc"
+    description: "IRC logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/rdp.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "rdp"
+    description: "RDP logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/ldap.log"
+    - "/opt/zeek/logs/current/ldap_search.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "ldap"
+    description: "LDAP logs and LDAP search logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/quic.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "quic"
+    description: "QUIC logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/traceroute.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "traceroute"
+    description: "Traceroute logs"
+
+- type: log
+  paths:
+    - "/opt/zeek/logs/current/tunnel.log"
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    type: "tunnel"
+   
+
+output.logstash:
+  hosts: ["localhost:12102"]
+
