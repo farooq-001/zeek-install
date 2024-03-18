@@ -6,8 +6,8 @@ start_download() {
     echo "Starting download..."
     sudo apt update && sudo apt install python3 python3-pip -y && pip3 install python-dateutil
 
-    # Create the systemd service file
-    sudo tee /etc/systemd/system/json-convert.service > /dev/null << EOF
+# Create the systemd service file
+sudo tee /etc/systemd/system/json-convert.service > /dev/null << EOF
 [Unit]
 Description=Python script conversion service
 After=network.target
@@ -24,8 +24,27 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-    # Create the Python script file
-    sudo tee /etc/python-convert.py > /dev/null << EOF
+
+# Create the systemd zeekctl.service file
+sudo tee /etc/systemd/system/zeekctl.service > /dev/null << EOF
+[Unit]
+Description=Zeek Network Security Monitor
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/zeek/bin/zeekctl start
+ExecReload=/opt/zeek/bin/zeekctl deploy
+ExecStop=/opt/zeek/bin/zeekctl stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
+# Create the Python script file
+sudo tee /etc/python-convert.py > /dev/null << EOF
 # Your Python script content here
 import json
 import os
@@ -115,6 +134,8 @@ EOF
     sudo systemctl daemon-reload
     sudo systemctl enable json-convert
     sudo systemctl start json-convert
+    sudo systemctl enable zeekctl
+    sudo systemctl start zeekctl
 }
 
 # Function to remove a file
