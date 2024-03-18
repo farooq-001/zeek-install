@@ -4,6 +4,7 @@
 start_download() {
     # Your download logic here
     echo "Starting download..."
+    sudo apt update && sudo apt install python3 python3-pip -y && pip3 install python-dateutil
 # Create the systemd service file
 sudo tee << EOF /etc/systemd/system/json-convert.service
 [Unit]
