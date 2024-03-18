@@ -56,7 +56,8 @@ elif grep -q 'Ubuntu 20.04' /etc/os-release; then
 fi
 
 echo "export PATH=$PATH:/opt/zeek/bin" >> ~/.bashrc
-source ~/.bashrc
+cd 
+source .bashrc
 echo "Enter source .bashrc command:"
 read cammand
 sudo $cammand
