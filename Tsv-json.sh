@@ -5,8 +5,9 @@ start_download() {
     # Your download logic here
     echo "Starting download..."
     sudo apt update && sudo apt install python3 python3-pip -y && pip3 install python-dateutil
-# Create the systemd service file
-sudo tee << EOF /etc/systemd/system/json-convert.service
+
+    # Create the systemd service file
+    sudo tee /etc/systemd/system/json-convert.service > /dev/null << EOF
 [Unit]
 Description=Python script conversion service
 After=network.target
@@ -23,8 +24,8 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# Create the Python script file
-sudo tee << EOF /etc/python-convert.py
+    # Create the Python script file
+    sudo tee /etc/python-convert.py > /dev/null << EOF
 # Your Python script content here
 import json
 import os
@@ -110,10 +111,10 @@ while True:
 
 EOF
 
-# Enable and start the systemd service
-sudo systemctl daemon-reload
-sudo systemctl enable json-convert
-sudo systemctl start json-convert
+    # Enable and start the systemd service
+    sudo systemctl daemon-reload
+    sudo systemctl enable json-convert
+    sudo systemctl start json-convert
 }
 
 # Function to remove a file
@@ -121,11 +122,11 @@ remove_file() {
     # Your file removal logic here
     echo "Removing file..."
     # Stop and disable the systemd service
-sudo systemctl stop json-convert
-sudo systemctl disable json-convert
-sudo rm /etc/systemd/system/json-convert.service
-sudo rm /etc/python-convert.py
-sudo systemctl daemon-reload
+    sudo systemctl stop json-convert
+    sudo systemctl disable json-convert
+    sudo rm /etc/systemd/system/json-convert.service
+    sudo rm /etc/python-convert.py
+    sudo systemctl daemon-reload
 }
 
 # Menu for selecting options
