@@ -34,6 +34,8 @@ echo  --------------"It will be start 30 Sec"------------
 sleep 30
 sudo apt update -y
 sudo apt upgrade -y
+sudo mkdir /var/log/capture
+sudo mkdir /var/log/capture/zipped
 
 echo "Enter server IP address:"
 read server_ip
@@ -100,6 +102,9 @@ sleep 10
 tail /opt/zeek/logs/current/conn.log
 sleep 10
 
+echo zeekctl check
+echo zeekctl deploy
+echo zeekctl status
 ##############################################################################################################################################################################################################
         echo "SNB-Chat-bot: zeek installation completed!"
     else
