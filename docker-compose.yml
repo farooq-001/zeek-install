@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  zeek:
+    image: blacktop/zeek:latest
+    container_name: zeek
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./zeek-logs:/pcap
+    command: >
+      -i wlp0s20f3 -C LogAscii::use_json=T
